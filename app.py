@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 from urllib.parse import quote
@@ -15,6 +16,7 @@ DASHSCOPE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completi
 EN_DICT_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/"
 
 app = Flask(__name__)
+application = app
 
 
 # ---------------- 配置读写 ----------------
@@ -305,4 +307,8 @@ def lookup_zh():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", "5000")),
+        debug=False,
+    )
