@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>纸页字典</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="book">
+  <div class="toolbar">
+    <button class="icon-btn" id="openSettings" title="设置">⚙</button>
+  </div>
+
+  <header>
+    <h1>紙頁字典</h1>
+    <p>ENGLISH · 中文 · 文言</p>
+  </header>
+
+  <div class="search-row">
+    <input id="queryInput" type="text" placeholder="输入汉字或词语…" autocomplete="off" spellcheck="false">
+    <button id="searchBtn">查阅</button>
+  </div>
+
+  <div class="lang-tabs" id="langTabs">
+    <button data-lang="en">英文</button>
+    <button data-lang="zh" class="active">中文</button>
+    <button data-lang="wenyan">文言文</button>
+  </div>
+
+  <div class="status" id="status"></div>
+  <div id="result"></div>
+</div>
+
+<div class="settings-overlay" id="settingsOverlay">
+  <div class="settings-panel">
+    <h2>设置</h2>
+
+    <div class="field">
+      <label>千问 API Key（中文 / 文言文需要）</label>
+      <input id="apiKeyInput" type="password" placeholder="sk-…" autocomplete="off">
+      <div class="hint" id="keyHint">从阿里云百炼 / DashScope 控制台获取，保存在服务器端 config.json。</div>
+    </div>
+
+    <div class="field">
+      <label>千问模型</label>
+      <select id="modelSelect">
+        <option value="qwen-plus">qwen-plus（推荐）</option>
+        <option value="qwen-max">qwen-max</option>
+        <option value="qwen-turbo">qwen-turbo</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>界面字体（100+ 可选）</label>
+      <select id="fontSelect"></select>
+      <div class="font-preview" id="fontPreview">永和九年，岁在癸丑。The quick brown fox.</div>
+    </div>
+
+    <div class="settings-actions">
+      <button class="btn-ghost" id="closeSettings">关闭</button>
+      <button class="btn-primary" id="saveSettings">保存</button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
