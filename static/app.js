@@ -254,6 +254,7 @@
     let html = '<div class="entry">';
     html += '<div class="entry-head">' +
       '<span class="entry-word en">' + escapeHtml(entry.word) + '</span>' +
+      '<button class="speak-btn" type="button" data-speak="' + escapeHtml(entry.word) + '" title="朗读单词" aria-label="朗读 ' + escapeHtml(entry.word) + '">🔊</button>' +
       (entry.phonetic ? '<span class="phonetic">' + escapeHtml(entry.phonetic) + '</span>' : '') +
       '</div>';
 
@@ -276,6 +277,22 @@
 
     html += '<div class="meta-line">来源：' + escapeHtml(entry.source) + '</div></div>';
     return html;
+  }
+
+  function speakEnglish(word) {
+    if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+      setStatus('当前浏览器不支持语音朗读。', true);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'en-US';
+    const voices = window.speechSynthesis.getVoices();
+    const englishVoice = voices.find((voice) => voice.lang.toLowerCase().startsWith('en-us')) ||
+      voices.find((voice) => voice.lang.toLowerCase().startsWith('en'));
+    if (englishVoice) utterance.voice = englishVoice;
+    window.speechSynthesis.speak(utterance);
   }
 
   function renderChinese(entry) {
@@ -381,6 +398,10 @@
     if (e.target === settingsOverlay) closeSettings();
   });
   $('saveSettings').addEventListener('click', saveSettings);
+  resultEl.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-speak]');
+    if (button) speakEnglish(button.dataset.speak);
+  });
   searchBtn.addEventListener('click', doSearch);
   queryInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') doSearch();

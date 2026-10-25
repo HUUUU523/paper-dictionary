@@ -93,6 +93,12 @@ header p { font-size: 12px; color: var(--ink-light); letter-spacing: 0.2em; }
 }
 .entry-word.en { font-family: var(--font-en); font-size: 36px; font-style: italic; }
 .phonetic { font-family: var(--font-en); font-size: 16px; color: var(--ink-light); }
+.speak-btn {
+  width: 34px; height: 34px; flex: none; border: 1px solid var(--rule);
+  border-radius: 50%; background: transparent; color: var(--accent);
+  cursor: pointer; font-size: 16px; line-height: 1;
+}
+.speak-btn:hover, .speak-btn:focus-visible { background: var(--paper-deep); outline: none; }
 .pinyin { font-size: 16px; color: var(--accent); letter-spacing: 0.08em; }
 .section { margin-bottom: 22px; }
 .section-title {
